@@ -12,6 +12,8 @@ corr_array = ddata.corr(method='spearman')
 print(corr_array)
 
 x1 = ddata[:]['co2']
-x2 = ddata[:]['TVOC']
+x2 = ddata[:]['H']
 plt.scatter(x1,x2)
+plt.xlabel("co2")
+plt.ylabel("h")
 plt.show()
