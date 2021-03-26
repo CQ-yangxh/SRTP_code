@@ -1,7 +1,4 @@
 #该代码将txt文件中的坐标进行转化并重新写入
-import csv
-import string
-import time
 import math
 
 # 系数常量
@@ -82,7 +79,7 @@ def gaindata(data):
     new_data=str(co2)+' '+str(ch2o)+' '+str(tvoc)+' '+str(pm25)+' '+str(pm10)+' '+str(t)+' '+str(h)
     return new_data
 ##################################
-filename = 'data_2_10dian_xuanwuhu.txt'
+filename = 'data_3_19dian_xuanwuhu.txt'
 
 with open(filename) as f:#默认以只读方式打开文件
     lines = f.readlines()#读取所有行，结果为列表，每行为列表一元素
