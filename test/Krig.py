@@ -11,7 +11,7 @@ js_box = js.geometry.total_bounds
 grid_lng = np.linspace(js_box[0],js_box[2],400)
 grid_lat = np.linspace(js_box[1],js_box[3],400)
 
-data=pd.read_json('./address.json')
+data=pd.read_json('E:/大学/srtp/SRTP_code/pre_process/after_filtering.json')
 lngs=data['lng'].values
 lats=data['lat'].values
 pm=data['count'].values

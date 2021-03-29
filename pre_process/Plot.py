@@ -9,7 +9,7 @@ with open(filename, 'r') as f:  # 1
     lines = f.readlines()  # 2
     for line in lines:  # 3
         temp=line.split()  # 4
-        if(int(temp[2])<1000 and int(temp[4])<1000):
+        if(int(temp[2])<1000 and int(temp[4])<1000 and int(temp[3])<100):
             X1.append(int(temp[2]))  #co2(ppm)
             X2.append(int(temp[3]))  #甲醛(ug/m^3)
             X3.append(int(temp[4]))  #TVOC(ug/m^3)

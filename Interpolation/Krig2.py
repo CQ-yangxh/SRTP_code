@@ -2,8 +2,9 @@ import pandas as pd
 from pykrige.ok import OrdinaryKriging
 import numpy as np
 from  matplotlib import pyplot as plt
+import matplotlib.cm as cm
 
-data=pd.read_json('E:/大学/srtp/SRTP_code/Heatmap/xuanwuhu.json')
+data=pd.read_json(r'E:/大学/srtp/SRTP_code/pre_process/after_filtering.json')
 lngs=data['lng'].values
 lats=data['lat'].values
 pm=data['count'].values
@@ -43,5 +44,5 @@ file1.close()
             
 fig=plt.figure()
 ax1=plt.axes(projection='3d')
-ax1.scatter3D(lngs,lats,pm,color='r')
-ax1.plot_surface(xgrid,ygrid,z1)
+ax1.scatter3D(lngs,lats,pm,color='gray')
+ax1.plot_surface(xgrid,ygrid,z1,cmap=cm.coolwarm)

@@ -23,7 +23,18 @@ for j in range(4):
     smooth=sg.savgol_filter(PM,51,3)
     R[j]=smooth
     PMM.T[j]=PM.T
-print(np.array(PMM).shape)
+#将滤波后的数据存入txt文件
+file = open(r'after_filtering.json','w')
+file.write('[')
+for j in range(728):
+    lat=str(D[9][j])
+    lng=str(D[10][j])
+    c=str(R[0][j])#co2
+    str_temp = '{"lng":' + lng + ',"lat":' + lat + ',"count":' + c + '},'
+    file.write(str_temp)
+    file.write('\n')
+file.write(']')#注意这里要删去多余的逗号
+file.close()
 plt.figure()
 plt.subplot(221)
 plt.plot(T,PMM.T[0],label='original data',linewidth=0.5)
