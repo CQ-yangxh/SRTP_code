@@ -69,7 +69,7 @@ plt.colorbar(surf1,shrink=0.5, aspect=10)#标注
 
 
 plt.figure(2)
-im1=plt.imshow(z1, extent=[np.min(lngs),np.max(lngs),np.min(lats),np.max(lats)], cmap=cm.coolwarm, interpolation='nearest', origin="lower")#pl.cm.jet
+im1=plt.imshow(z1, extent=[np.min(lngs),np.max(lngs),np.max(lats),np.min(lats)], cmap=cm.coolwarm, interpolation='nearest', origin="lower")#pl.cm.jet
 #extent=[]为x,y范围  favals为
 plt.colorbar(im1)
 plt.show()

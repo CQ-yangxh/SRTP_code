@@ -1,7 +1,7 @@
 import os
 import pandas as pd
 import matplotlib.pyplot as plt
-data = pd.read_csv(os.path.join(os.path.dirname(os.getcwd()),"pre_process/2021-02-07-bd.txt"),sep=' ',header=None)
+data = pd.read_csv(os.path.join(os.path.dirname(os.getcwd()),"E:/大学/srtp/SRTP_code/pre_process/xuanwuhu.txt"),sep=' ',header=None)
 rows = data.shape[0]
 cols = data.shape[1]
 ddata = data.iloc[:,2:cols-2]

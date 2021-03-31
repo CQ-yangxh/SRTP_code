@@ -10,13 +10,13 @@ plt.rcParams['axes.unicode_minus']=False   #这两行需要手动设置
 D=pd.read_csv('xuanwuhu.txt',sep=' ',header=None)
 Start=dt.datetime(2021,2,7,10,52,18);
 time=Start
-T=[0 for x in range(0,728)]#728为读取txt中的数据行数
-R=np.empty((4,728))
-PMM=np.empty((728,4))
+T=[0 for x in range(0,len(D))]#728为读取txt中的数据行数
+R=np.empty((4,len(D)))
+PMM=np.empty((len(D),4))
 for j in range(4):
     P=D[2+j]#2为co2
-    PM=np.zeros(728)
-    for i in range(728):
+    PM=np.zeros(len(D))
+    for i in range(len(D)):
         PM[i]=int(P[i])
         time=time+dt.timedelta(seconds=2)
         T[i]=time
@@ -26,7 +26,7 @@ for j in range(4):
 #将滤波后的数据存入txt文件
 file = open(r'after_filtering.json','w')
 file.write('[')
-for j in range(728):
+for j in range(len(D)):
     lat=str(D[9][j])
     lng=str(D[10][j])
     c=str(R[0][j])#co2
