@@ -1,3 +1,4 @@
+#有用的克里格插值
 import pandas as pd
 from pykrige.ok import OrdinaryKriging
 import numpy as np
@@ -8,7 +9,7 @@ data=pd.read_json(r'E:/大学/srtp/SRTP_code/pre_process/after_filtering.json')
 lngs=data['lng'].values
 lats=data['lat'].values
 pm=data['count'].values
-Num=20;
+Num=20
 grid_lat = np.linspace(np.max(lats),np.min(lats),Num)
 grid_lng = np.linspace(np.max(lngs),np.min(lngs),Num)
 

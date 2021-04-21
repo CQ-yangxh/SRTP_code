@@ -2,7 +2,7 @@ import csv
 import json
 file = open(r'E:\大学\srtp\SRTP_code\Heatmap\xuanwuhu.json', 'w')  # 建立json数据文件
 file.write('[')
-with open(r'E:\大学\srtp\SRTP_code\pre_process\xuanwuhu.txt', 'r') as f:
+with open(r'E:/大学/srtp/SRTP_code/pre_process/xuanwuhu.txt', 'r') as f:
     lines = f.readlines()
     for line in lines:  # 读取csv里的数据
         # line.split()是个list，取得所有需要的值

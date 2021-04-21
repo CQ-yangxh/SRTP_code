@@ -1,6 +1,6 @@
 #该代码将txt文件中的坐标进行转化并重新写入
 import math
-
+import time
 # 系数常量
 a = 6378245.0
 ee = 0.00669342162296594323
@@ -79,7 +79,11 @@ def gaindata(data):
     new_data=str(co2)+' '+str(ch2o)+' '+str(tvoc)+' '+str(pm25)+' '+str(pm10)+' '+str(t)+' '+str(h)
     return new_data
 ##################################
-filename = 'data_2_10dian_xuanwuhu.txt'
+localtime = time.localtime(time.time())
+year=str(localtime.tm_year)
+mon=str(localtime.tm_mon)
+day=str(localtime.tm_mday)
+filename = 'data_3_19dian_xuanwuhu.txt'
 
 with open(filename) as f:#默认以只读方式打开文件
     lines = f.readlines()#读取所有行，结果为列表，每行为列表一元素
@@ -102,7 +106,7 @@ with open('xuanwuhu.txt','w') as f:
         str_lon=str(bd_point[1])
         str_data=gaindata(line[14])
         str_time=gaintime(line[1])
-        txt='2020-00-00'+' '+str_time+' '+str_data+' '+str_lat+' '+str_lon
+        txt=year+'-'+mon+'-'+day+' '+str_time+' '+str_data+' '+str_lat+' '+str_lon
         f.write(txt.strip(' '))
         f.write('\n')
         txt=''

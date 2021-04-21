@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 plt.rcParams['font.sans-serif']=['SimHei'] #显示中文标签
 plt.rcParams['axes.unicode_minus']=False   #这两行需要手动设置
 
-filename = 'xuanwuhu.txt'
+filename = '2021-04-11.txt'
 filedata = ''
 X1 ,X2, X3, X4, X5, X6, X7 =  [], [], [], [], [], [], []
 with open(filename, 'r') as f:  # 1
@@ -16,7 +16,7 @@ with open(filename, 'r') as f:  # 1
             X4.append(int(temp[5]))  #PM2.5(ug/m^3)
             X5.append(float(temp[6]))  #PM10ug/m^3)
             X6.append(float(temp[7]))  #TEM(C)
-            X7.append(float(temp[8]))  #HUM(%)
+            X7.append(float(temp[8]))  #HUM(%)…………………………………………使用ctr+1快捷注释代码,注释if
             filedata+=line
 with open(filename, 'w') as f:
     f.write(filedata)

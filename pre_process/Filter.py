@@ -7,10 +7,18 @@ import datetime as dt
 plt.rcParams['font.sans-serif']=['SimHei'] #显示中文标签
 plt.rcParams['axes.unicode_minus']=False   #这两行需要手动设置
 
-D=pd.read_csv('xuanwuhu.txt',sep=' ',header=None)
-Start=dt.datetime(2021,2,7,10,52,18);
+D=pd.read_csv('E:/大学/srtp/SRTP_code/pre_process/2021-04-11.txt',sep=' ',header=None)
+ymd=D[0][0]
+hms=D[1][0]
+year=int(ymd.split('-')[0])
+mon=int(ymd.split('-')[1])
+day=int(ymd.split('-')[2])
+hour=int(hms.split(':')[0])
+minute=int(hms.split(':')[0])
+second=int(hms.split(':')[0])
+Start=dt.datetime(year,mon,day,hour,minute,second);
 time=Start
-T=[0 for x in range(0,len(D))]#728为读取txt中的数据行数
+T=[0 for x in range(0,len(D))]
 R=np.empty((4,len(D)))
 PMM=np.empty((len(D),4))
 for j in range(4):
@@ -26,15 +34,20 @@ for j in range(4):
 #将滤波后的数据存入txt文件
 file = open(r'after_filtering.json','w')
 file.write('[')
-for j in range(len(D)):
+for j in range(len(D)-1):
     lat=str(D[9][j])
     lng=str(D[10][j])
     c=str(R[0][j])#co2
     str_temp = '{"lng":' + lng + ',"lat":' + lat + ',"count":' + c + '},'
     file.write(str_temp)
     file.write('\n')
-file.write(']')#注意这里要删去多余的逗号
+lat=str(D[9][len(D)-1])
+lng=str(D[10][len(D)-1])
+c=str(R[0][len(D)-1])#co2
+str_temp = '{"lng":' + lng + ',"lat":' + lat + ',"count":' + c + '}]'
+file.write(str_temp)
 file.close()
+
 plt.figure()
 plt.subplot(221)
 plt.plot(T,PMM.T[0],label='original data',linewidth=0.5)

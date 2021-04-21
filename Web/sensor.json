@@ -1,0 +1,5 @@
+[{"number":1,"date":"2021-02-07","time":"20:51:28","co2":429,"ch2o":1,"tvoc":11,"pm2_5":103,"pm10":120,"temperature":18.6,"humidity":58.7,"latitude":28.2985618,"longitude":106.2574755},
+{"number":2,"date":"2021-02-07","time":"20:51:21","co2":419,"ch2o":0,"tvoc":13,"pm2_5":36,"pm10":141,"temperature":16.7,"humidity":44.2,"latitude":29.2985618,"longitude":106.2574755},
+{"number":3,"date":"2021-02-07","time":"20:51:29","co2":418,"ch2o":0,"tvoc":17,"pm2_5":85,"pm10":160,"temperature":13.1,"humidity":67.1,"latitude":29.2985618,"longitude":106.2574755},
+{"number":4,"date":"2021-02-07","time":"20:51:18","co2":417,"ch2o":1,"tvoc":12,"pm2_5":113,"pm10":110,"temperature":19.2,"humidity":34.2,"latitude":29.2985618,"longitude":106.2574755}
+]

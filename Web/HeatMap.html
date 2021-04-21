@@ -1,0 +1,353 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=gUXaD9rG7qobdwlIjStugDfsx9rRwkaB"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/library/Heatmap/2.0/src/Heatmap_min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <title>热力图显示</title>
+
+    <style type="text/css">
+    ul,li{list-style: none;margin:0;padding: 0}
+    html{height:70%}
+    body{height:100%;margin:3%;padding:0px;background-image: url("./background.jpg");background-size:cover;}
+    #container{height:100%;width:70%;float:left;border-right:2px solid #bcbcbc;}
+    #r-result{height:100%;width:20%;float:left;}
+    .btn-container{margin:20px;}
+    fieldset{border: 1px solid;border-radius: 3px;}
+    fieldset label{font-size: 14px; line-height: 30px;}
+    .btn{
+    	color: #333;background-color: #fff;display: inline-block;padding: 6px 12px;font-size: 14px;
+		font-weight: normal;line-height: 1.428571429;border: 1px solid #ccc;border-radius: 4px;
+		margin-top: 5px;margin-bottom: 5px;}
+	.btn:hover{color: #333;background-color: #ebebeb;border-color: #adadad;}
+	.text-primary{
+		font-weight: bold;
+	}
+	textarea{border: 1px solid #ccc;border-radius: 4px;}
+	textarea:focus{border-color: #66afe9;outline: 0;box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(102,175,233,0.6);}
+	.color-list li{font-size: 14px; line-height: 30px;}
+    </style>
+</head>
+<body>
+	<div style="font-size:x-large;"><strong style="font-size:24px;background:rgb(255, 255, 255)">显示指标：</strong><select style="font-size:24px;background:rgb(255, 255, 255)" onchange="paint(this.value)">
+		<option value="" style="display: none;" disabled selected>请选择</option>
+		<option value="1">PM2.5</option>
+		<option value="2">PM10</option>
+		<option value="3">TVOC</option>
+		<option value="4">湿度</option>
+	  </select></td></div>
+	
+<div id="container">
+</div>
+<script type="text/javascript">
+	var sensordata = (function() {
+        var sensor = null;
+        $.ajax({
+            'async': false,
+            'global': false,
+            'url': "sensor.json",
+            'dataType': "json",
+            'success': function (data) {
+                sensor = data;
+            }
+        });
+        return sensor;
+    })();
+</script>
+<div id="r-result">
+    <div class="btn-container">
+    	<fieldset style="background:rgb(255, 255, 255)">
+        <span style="font-size:14px;">显示热力图:</span><input type="checkbox"  onclick="toggle();" checked="checked" /></br>
+        </fieldset>
+		<br><br><br>
+		<div class="box">
+			<select class="switch1">
+				<option value="1">传感器1</option>
+				<option value="2">传感器2</option>
+				<option value="3">传感器3</option>
+				<option value="4">传感器4</option>
+			</select>
+		</div>
+		<div id="1" class="ssdata" style="background:rgb(255, 255, 255)">
+			编号：<script type="text/javascript">document.write(sensordata[0]["number"])</script>
+			<br>
+			日期：<script type="text/javascript">document.write(sensordata[0]["date"])</script>
+			<br>
+			时间：<script type="text/javascript">document.write(sensordata[0]["time"])</script>
+			<br>
+			CO2：<script type="text/javascript">document.write(sensordata[0]["co2"])</script>
+			<br>
+			CH2O：<script type="text/javascript">document.write(sensordata[0]["ch2o"])</script>
+			<br>
+			TVOC：<script type="text/javascript">document.write(sensordata[0]["tvoc"])</script>
+			<br>
+			PM2.5：<script type="text/javascript">document.write(sensordata[0]["pm2_5"])</script>
+			<br>
+			PM10：<script type="text/javascript">document.write(sensordata[0]["pm10"])</script>
+			<br>
+			温度：<script type="text/javascript">document.write(sensordata[0]["temperature"])</script>
+			<br>
+			湿度：<script type="text/javascript">document.write(sensordata[0]["humidity"])</script>
+			<br>
+			纬度：<script type="text/javascript">document.write(sensordata[0]["latitude"])</script>
+			<br>
+			经度：<script type="text/javascript">document.write(sensordata[0]["longitude"])</script>
+			<br>
+		</div>
+		<div id="2" class="ssdata" style="background:rgb(255, 255, 255)">
+			编号：<script type="text/javascript">document.write(sensordata[1]["number"])</script>
+			<br>
+			日期：<script type="text/javascript">document.write(sensordata[1]["date"])</script>
+			<br>
+			时间：<script type="text/javascript">document.write(sensordata[1]["time"])</script>
+			<br>
+			CO2：<script type="text/javascript">document.write(sensordata[1]["co2"])</script>
+			<br>
+			CH2O：<script type="text/javascript">document.write(sensordata[1]["ch2o"])</script>
+			<br>
+			TVOC：<script type="text/javascript">document.write(sensordata[1]["tvoc"])</script>
+			<br>
+			PM2.5：<script type="text/javascript">document.write(sensordata[1]["pm2_5"])</script>
+			<br>
+			PM10：<script type="text/javascript">document.write(sensordata[1]["pm10"])</script>
+			<br>
+			温度：<script type="text/javascript">document.write(sensordata[1]["temperature"])</script>
+			<br>
+			湿度：<script type="text/javascript">document.write(sensordata[1]["humidity"])</script>
+			<br>
+			纬度：<script type="text/javascript">document.write(sensordata[1]["latitude"])</script>
+			<br>
+			经度：<script type="text/javascript">document.write(sensordata[1]["longitude"])</script>
+			<br>
+		</div>
+		<div id="3" class="ssdata" style="background:rgb(255, 255, 255)">
+			编号：<script type="text/javascript">document.write(sensordata[2]["number"])</script>
+			<br>
+			日期：<script type="text/javascript">document.write(sensordata[2]["date"])</script>
+			<br>
+			时间：<script type="text/javascript">document.write(sensordata[2]["time"])</script>
+			<br>
+			CO2：<script type="text/javascript">document.write(sensordata[2]["co2"])</script>
+			<br>
+			CH2O：<script type="text/javascript">document.write(sensordata[2]["ch2o"])</script>
+			<br>
+			TVOC：<script type="text/javascript">document.write(sensordata[2]["tvoc"])</script>
+			<br>
+			PM2.5：<script type="text/javascript">document.write(sensordata[2]["pm2_5"])</script>
+			<br>
+			PM10：<script type="text/javascript">document.write(sensordata[2]["pm10"])</script>
+			<br>
+			温度：<script type="text/javascript">document.write(sensordata[2]["temperature"])</script>
+			<br>
+			湿度：<script type="text/javascript">document.write(sensordata[2]["humidity"])</script>
+			<br>
+			纬度：<script type="text/javascript">document.write(sensordata[2]["latitude"])</script>
+			<br>
+			经度：<script type="text/javascript">document.write(sensordata[2]["longitude"])</script>
+			<br>
+		</div>
+		<div id="4" class="ssdata" style="background:rgb(255, 255, 255)">
+			编号：<script type="text/javascript">document.write(sensordata[3]["number"])</script>
+			<br>
+			日期：<script type="text/javascript">document.write(sensordata[3]["date"])</script>
+			<br>
+			时间：<script type="text/javascript">document.write(sensordata[3]["time"])</script>
+			<br>
+			CO2：<script type="text/javascript">document.write(sensordata[3]["co2"])</script>
+			<br>
+			CH2O：<script type="text/javascript">document.write(sensordata[3]["ch2o"])</script>
+			<br>
+			TVOC：<script type="text/javascript">document.write(sensordata[3]["tvoc"])</script>
+			<br>
+			PM2.5：<script type="text/javascript">document.write(sensordata[3]["pm2_5"])</script>
+			<br>
+			PM10：<script type="text/javascript">document.write(sensordata[3]["pm10"])</script>
+			<br>
+			温度：<script type="text/javascript">document.write(sensordata[3]["temperature"])</script>
+			<br>
+			湿度：<script type="text/javascript">document.write(sensordata[3]["humidity"])</script>
+			<br>
+			纬度：<script type="text/javascript">document.write(sensordata[3]["latitude"])</script>
+			<br>
+			经度：<script type="text/javascript">document.write(sensordata[3]["longitude"])</script>
+			<br>
+		</div>
+    </div>
+
+</div>
+<script>
+    //页面加载先执行一次
+    switchBySelect();
+    //下拉框change事件
+    $(".switch1").on("change",function () {
+       switchBySelect();
+    });
+    function switchBySelect() {
+        var v = $(".switch1").val();//得到下拉框的value值
+        $(".ssdata").each(function (index,element) {
+            if($(element).attr("id") == v){
+                $(element).show();
+            }else{
+                $(element).hide();
+            }
+        });
+    }
+</script>
+
+<script type="text/javascript">
+function paint(a){
+    var map = new BMap.Map("container");          // 创建地图实例
+    var point = new BMap.Point(118.797205, 32.071714);
+    map.centerAndZoom(point, 16);             // 初始化地图，设置中心点坐标和地图级别
+	map.enableScrollWheelZoom();
+
+	
+
+	if(a==1){
+    var points = (function() {
+        var point = null;
+        $.ajax({
+            'async': false,
+            'global': false,
+            'url': "PM2_5.json",
+            'dataType': "json",
+            'success': function (data) {
+                point = data;
+            }
+        });
+        return point;
+    })();}
+	else if(a==2){
+		var points = (function() {
+        var point = null;
+        $.ajax({
+            'async': false,
+            'global': false,
+            'url': "PM10.json",
+            'dataType': "json",
+            'success': function (data) {
+                point = data;
+            }
+        });
+        return point;
+    })();
+	}
+	else if(a==3){
+		var points = (function() {
+        var point = null;
+        $.ajax({
+            'async': false,
+            'global': false,
+            'url': "TVOC.json",
+            'dataType': "json",
+            'success': function (data) {
+                point = data;
+            }
+        });
+        return point;
+    })();
+	}
+	else if(a==4){
+		var points = (function() {
+        var point = null;
+        $.ajax({
+            'async': false,
+            'global': false,
+            'url': "Humidity.json",
+            'dataType': "json",
+            'success': function (data) {
+                point = data;
+            }
+        });
+        return point;
+    })();
+	}
+
+	var maxCount=0;
+	var minCount=5000;
+	var temp=0;
+	var counts =new Array();
+	for(i=0;i<points.length;i++){
+		temp=points[i]['count'];
+		counts.push(temp);
+		if(maxCount<temp) maxCount=temp;
+		if(minCount>temp) minCount=temp;
+	}
+	
+	
+    if(!isSupportCanvas()){
+    	alert('热力图目前只支持有canvas支持的浏览器,您所使用的浏览器不能使用热力图功能~')
+    }
+
+
+	//详细的参数,可以查看heatmap.js的文档 https://github.com/pa7/heatmap.js/blob/master/README.md
+
+	//参数说明如下:
+	/* visible 热力图是否显示,默认为true
+     * opacity 热力的透明度,1-100
+     * radius 势力图的每个点的半径大小
+     * gradient  {JSON} 热力图的渐变区间 . gradient如下所示
+     *	{
+			.2:'rgb(0, 255, 255)',
+			.5:'rgb(0, 110, 255)',
+			.8:'rgb(100, 0, 255)'
+		}
+		其中 key 表示插值的位置, 0~1.
+		    value 为颜色值.
+     */
+	var gdt;
+	
+	gdt={
+		.85:'#89ff33',
+		.9:'#ffff00',
+		.95:'#ff7300',
+		1:'#ff0000',
+};
+
+
+
+	heatmapOverlay = new BMapLib.HeatmapOverlay({"blur":0.5,"radius":80,"maxOpacity": 0.9, "minOpacity": 0.1,"gradient":gdt});
+	map.addOverlay(heatmapOverlay);
+	heatmapOverlay.setDataSet({data:points,max:2000});
+	cbar();
+}
+    function toggle(){
+        heatmapOverlay.toggle()
+    }
+
+
+    function isSupportCanvas(){
+        var elem = document.createElement('canvas');
+        return !!(elem.getContext && elem.getContext('2d'));
+    }
+
+
+
+</script>
+
+<canvas id="myCanvas" width="600" height="10" style="border:0px solid #c3c3c3;">
+	Your browser does not support the canvas element.
+	</canvas>
+	
+	
+	<script type="text/javascript" >
+	function cbar(){
+	var c=document.getElementById("myCanvas");
+	var cxt=c.getContext("2d");
+	var grd=cxt.createLinearGradient(0,0,600,10);
+	grd.addColorStop(0,"#ffffff");
+	grd.addColorStop(0.5,"#89ff01");
+	grd.addColorStop(0.8,"#ffff00");
+	grd.addColorStop(0.9,"#ff7300");
+	grd.addColorStop(1,"#ff0000");
+	cxt.fillStyle=grd;
+	cxt.fillRect(0,0,600,10);
+	}
+	</script>
+
+</body>
+</html>
