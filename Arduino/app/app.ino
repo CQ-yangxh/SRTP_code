@@ -1,11 +1,13 @@
 #define BLINKER_BLE
 #include <Blinker.h>
 
+
 BlinkerNumber CO2("num-co2");
 BlinkerNumber PM25("num-pm25");
 BlinkerNumber TEM("num-tem");
 BlinkerNumber HUM("num-hum");
-
+BlinkerNumber TVOC("num-tvoc");
+BlinkerNumber CH2O("num-ch2o");
 int tmp1=0;
 int tmp2=0;
 int arr[15];
@@ -17,7 +19,7 @@ int cal_co2()
   int h,l,f;
   h=arr[1];
   l=arr[2];
-  f=h*16+l;
+  f=h*256+l;
   return f;
 }
 
@@ -26,7 +28,7 @@ int cal_pm25()
   int h,l,f;
   h=arr[7];
   l=arr[8];
-  f=h*16+l;
+  f=h*256+l;
   return f;
 }
 
@@ -50,13 +52,33 @@ float cal_hum()
   return f;
 }
 
+float cal_tvoc()
+{
+  int h,l,f;
+  h=arr[5];
+  l=arr[6];
+  f=h*256+l;
+  return f;
+}
+
+float cal_ch2o()
+{
+  int h,l,f;
+  h=arr[3];
+  l=arr[4];
+  f=h*256+l;
+  return f;
+}
 void heartbeat()
 {
     CO2.print(cal_co2());
     PM25.print(cal_pm25());
     TEM.print(cal_tem());
     HUM.print(cal_hum());
+    TVOC.print(cal_tvoc());
+    CH2O.print(5);
 }
+
 
 void setup() {
   // put your setup code here, to run once:
@@ -99,5 +121,5 @@ void loop() {
       }
       tmp2=tmp1;
   }
-  delay(50);
+  delay(2000);
 }

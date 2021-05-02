@@ -14,7 +14,7 @@ grid_lat = np.linspace(np.max(lats),np.min(lats),Num)
 grid_lng = np.linspace(np.max(lngs),np.min(lngs),Num)
 
 
-OK=OrdinaryKriging(lngs, lats,pm,variogram_model='gaussian',nlags=5)
+OK=OrdinaryKriging(lngs, lats,pm,variogram_model='gaussian',nlags=6)
 z1, ss1 = OK.execute('grid', grid_lng, grid_lat)
 
 #转换成网格
@@ -56,5 +56,6 @@ ax1.set_zlabel('CO2(ppm)')
 plt.figure(2)
 im1=plt.imshow(z1, extent=[np.min(lngs),np.max(lngs),np.min(lats),np.max(lats)], cmap=cm.coolwarm, interpolation='nearest', origin="lower")#pl.cm.jet
 #extent=[]为x,y范围  favals为
+plt.title('Plane Diagram')
 plt.colorbar(im1)
 plt.show()

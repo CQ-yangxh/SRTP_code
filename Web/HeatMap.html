@@ -38,8 +38,9 @@
 		<option value="1">PM2.5</option>
 		<option value="2">PM10</option>
 		<option value="3">TVOC</option>
-		<option value="4">湿度</option>
-	  </select></td></div>
+		<option value="4">温度</option>
+	  </select><div id="unit"  style="width:200px; height:auto;display: inline;color:#000000;font-weight:bold;font-size:24px;background:rgb(255, 255, 255)"></div>
+	  </div>
 	
 <div id="container">
 </div>
@@ -203,12 +204,13 @@ function paint(a){
     var map = new BMap.Map("container");          // 创建地图实例
     var point = new BMap.Point(118.797205, 32.071714);
     map.centerAndZoom(point, 16);             // 初始化地图，设置中心点坐标和地图级别
-	map.enableScrollWheelZoom();
+	map.enableScrollWheelZoom();			//允许滚轮缩放
 
 	
 
 	if(a==1){
     var points = (function() {
+		unit.innerText="（单位：μg/m³）";
         var point = null;
         $.ajax({
             'async': false,
@@ -223,6 +225,7 @@ function paint(a){
     })();}
 	else if(a==2){
 		var points = (function() {
+			unit.innerText="（单位：μg/m³）";
         var point = null;
         $.ajax({
             'async': false,
@@ -238,6 +241,7 @@ function paint(a){
 	}
 	else if(a==3){
 		var points = (function() {
+			unit.innerText="（单位：ppm）";
         var point = null;
         $.ajax({
             'async': false,
@@ -253,11 +257,12 @@ function paint(a){
 	}
 	else if(a==4){
 		var points = (function() {
+			unit.innerText="（单位：℃）";
         var point = null;
         $.ajax({
             'async': false,
             'global': false,
-            'url': "Humidity.json",
+            'url': "Temperature.json",
             'dataType': "json",
             'success': function (data) {
                 point = data;
@@ -277,6 +282,10 @@ function paint(a){
 		if(maxCount<temp) maxCount=temp;
 		if(minCount>temp) minCount=temp;
 	}
+	for(i=0;i<points.length;i++){
+		points[i]['count']=(points[i]['count']-minCount)/(maxCount-minCount);
+	}
+	//确定归一化区间
 	
 	
     if(!isSupportCanvas()){
@@ -302,22 +311,23 @@ function paint(a){
 	var gdt;
 	
 	gdt={
-		.85:'#89ff33',
-		.9:'#ffff00',
-		.95:'#ff7300',
+		0:'#00ddff',
+		.25:'#66ff00',
+		.5:'#ffff00',
+		.75:'#ff9f03',
 		1:'#ff0000',
-};
+		};//设置热力图颜色梯度
 
 
 
-	heatmapOverlay = new BMapLib.HeatmapOverlay({"blur":0.5,"radius":80,"maxOpacity": 0.9, "minOpacity": 0.1,"gradient":gdt});
+	heatmapOverlay = new BMapLib.HeatmapOverlay({"blur":0.1,"radius":15,"opacity": 0.9,"gradient":gdt});
 	map.addOverlay(heatmapOverlay);
-	heatmapOverlay.setDataSet({data:points,max:2000});
-	cbar();
-}
+	heatmapOverlay.setDataSet({data:points,max:64});
+	cbar(minCount,maxCount);//绘制colorbar
+}//热力图绘制函数
     function toggle(){
         heatmapOverlay.toggle()
-    }
+    }//热力图显示切换
 
 
     function isSupportCanvas(){
@@ -335,19 +345,35 @@ function paint(a){
 	
 	
 	<script type="text/javascript" >
-	function cbar(){
+	function cbar(a,b){
 	var c=document.getElementById("myCanvas");
 	var cxt=c.getContext("2d");
 	var grd=cxt.createLinearGradient(0,0,600,10);
-	grd.addColorStop(0,"#ffffff");
-	grd.addColorStop(0.5,"#89ff01");
-	grd.addColorStop(0.8,"#ffff00");
-	grd.addColorStop(0.9,"#ff7300");
+	grd.addColorStop(0,"#00ddff");
+	grd.addColorStop(0.25,"#66ff00");
+	grd.addColorStop(0.5,"#ffff00");
+	grd.addColorStop(0.75,"#ff9f03");
 	grd.addColorStop(1,"#ff0000");
 	cxt.fillStyle=grd;
 	cxt.fillRect(0,0,600,10);
+	var n1=a;
+	var n5=b;
+	var n2=a+0.25*(b-a);
+	var n3=a+0.5*(b-a);
+	var n4=a+0.75*(b-a);
+	colorbar1.innerText=n1.toFixed(2);
+	colorbar2.innerText=n2.toFixed(2);
+	colorbar3.innerText=n3.toFixed(2);
+	colorbar4.innerText=n4.toFixed(2);
+	colorbar5.innerText=n5.toFixed(2);
+
 	}
 	</script>
-
+<div></div>
+<div id="colorbar1"  style="width:150px; height:auto; float:left; display:inline;color:#000000;font-weight:bold"></div>
+<div id="colorbar2"  style="width:150px; height:auto; float:left; display:inline;color:#000000;font-weight:bold"></div>
+<div id="colorbar3"  style="width:150px; height:auto; float:left; display:inline;color:#000000;font-weight:bold"></div>
+<div id="colorbar4"  style="width:150px; height:auto; float:left; display:inline;color:#000000;font-weight:bold"></div>
+<div id="colorbar5"  style="width:150px; height:auto; float:left; display:inline;color:#000000;font-weight:bold"></div>
 </body>
 </html>
